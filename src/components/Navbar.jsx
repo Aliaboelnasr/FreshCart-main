@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import logo from "../assets/images/freshcart-logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { UserTokenContext } from "../context/UserToken";
-import { numItem } from "../Context/NumberCartContext";
+// import { numItem } from "../Context/NumberCartContext";
 import { counterContext } from "../context/Countercontext";
 
 export default function Navbar() {

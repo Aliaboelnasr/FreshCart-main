@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "./Loading";
 import ProductItem from "./ProductItem";
-import useMutationCart, { addToCart } from "../hooks/useMutationCart";
+
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 

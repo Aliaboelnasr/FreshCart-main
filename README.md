@@ -41,12 +41,18 @@ cd FreshCart-main
 npm install
 ```
 
-3. Start the development server:
+3. Configure environment variables:
+```bash
+cp .env.example .env
+```
+Then edit `.env` and set `VITE_LIVE_DEMO_URL` to your deployed application URL (e.g., Vercel or GitHub Pages URL). For local development, you can keep the default `http://localhost:5173`.
+
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+5. Open your browser and navigate to `http://localhost:5173`
 
 ### Build for Production
 
@@ -59,6 +65,19 @@ npm run build
 ```bash
 npm run preview
 ```
+
+### Deployment
+
+When deploying to production (Vercel, Netlify, GitHub Pages, etc.):
+
+1. Set the `VITE_LIVE_DEMO_URL` environment variable to your deployed application URL
+2. The payment system will use this URL for post-payment redirects
+3. After successful payment, users will be redirected to the `/allorders` page
+
+**Example Environment Variables:**
+- Vercel: `VITE_LIVE_DEMO_URL=https://your-app.vercel.app`
+- GitHub Pages: `VITE_LIVE_DEMO_URL=https://username.github.io/FreshCart-main`
+- Netlify: `VITE_LIVE_DEMO_URL=https://your-app.netlify.app`
 
 ## Project Structure
 

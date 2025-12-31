@@ -1,36 +1,22 @@
-import { useMutation } from "@tanstack/react-query";
-import { useContext, useState } from "react";
-import PropTypes from "prop-types";
-import { paymentOnline } from "../Apis/payment";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as motion from "motion/react-client";
-import { UserTokenContext } from "../context/UserToken";
 import { paymentSchema } from "../libs/paymentSchema";
 import { formatCardNumber, formatExpirationDate, detectCardType } from "../libs/paymentValidation";
 
-export default function Payment({ cartId }) {
-  const { token } = useContext(UserTokenContext);
+/**
+ * Demo component to showcase payment validation features
+ * This is for testing and demonstration purposes only
+ */
+export default function PaymentDemo() {
   const [cardType, setCardType] = useState("unknown");
-  
-  let { mutate, data, isPending } = useMutation({ 
-    mutationFn: (shippingData) => paymentOnline({ ...shippingData, token }) 
-  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   function handlePayment(values) {
-    // NOTE: Credit card information (cardNumber, CVV, cardholderName, zipCode) is validated
-    // client-side only for UX purposes. This sensitive data is NOT sent to the server.
-    // The actual payment processing is handled by the payment gateway URL returned from the API.
-    // Only shipping address information is sent to our backend.
-    const shippingAddress = {
-      details: values.details,
-      city: values.city,
-      phone: values.phone,
-    };
-    mutate({ cartId, shippingAddress });
+    console.log("Payment form submitted with values:", values);
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 3000);
   }
-  
-  if (data?.data?.status === "success")
-    window.location.href = data?.data?.session?.url;
 
   let formik = useFormik({
     initialValues: {
@@ -88,9 +74,28 @@ export default function Payment({ cartId }) {
         delay: 0.5,
         ease: [0, 0.71, 0.2, 1.01],
       }}
-      className="max-w-2xl mx-auto"
+      className="max-w-2xl mx-auto p-4"
     >
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+        <h3 className="text-lg font-semibold text-blue-800 mb-2">Payment Validation Demo</h3>
+        <p className="text-sm text-blue-700">
+          Test the payment validation with these sample valid card numbers:
+        </p>
+        <ul className="text-sm text-blue-700 mt-2 space-y-1">
+          <li>• Visa: 4532015112830366</li>
+          <li>• MasterCard: 5425233430109903</li>
+          <li>• Amex: 374245455400126 (requires 4-digit CVV)</li>
+        </ul>
+      </div>
+
       <h2 className="my-4 text-2xl font-bold">Payment Information</h2>
+      
+      {isSubmitted && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+          <p className="text-green-800 font-semibold">✓ Payment validated successfully!</p>
+        </div>
+      )}
+
       <form onSubmit={formik.handleSubmit} className="space-y-4">
         
         {/* Card Information Section */}
@@ -303,20 +308,16 @@ export default function Payment({ cartId }) {
         {/* Submit Button */}
         <button 
           type="submit" 
-          disabled={isPending || !formik.isValid}
+          disabled={!formik.isValid || !formik.dirty}
           className={`w-full p-4 rounded-lg font-semibold transition-colors ${
-            isPending || !formik.isValid
+            !formik.isValid || !formik.dirty
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-green-500 hover:bg-green-600 text-white'
           }`}
         >
-          {isPending ? 'Processing...' : 'Complete Payment'}
+          Validate Payment
         </button>
       </form>
     </motion.div>
   );
 }
-
-Payment.propTypes = {
-  cartId: PropTypes.string,
-};

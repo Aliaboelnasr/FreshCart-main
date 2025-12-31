@@ -1,6 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import useMutationCart, { addToCart } from "../hooks/useMutationCart";
+import useMutationCart, { addToCart } from "../hooks/useMutationcart";
 import useMutationWishlist, {
   addToWishlist,
 } from "../hooks/useMutationWishlist";

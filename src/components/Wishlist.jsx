@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import useQueryWishlist, { getWishlist } from "../hooks/useQueryWishlist";
 import useMutationWishlist, {
   removeFromWishlist,
@@ -6,7 +6,7 @@ import useMutationWishlist, {
 import { wishlistContext } from "../context/WishlistContext";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
-import useMutationCart, { addToCart } from "../hooks/useMutationCart";
+import useMutationCart, { addToCart } from "../hooks/useMutationcart";
 import toast from "react-hot-toast";
 
 export default function Wishlist() {

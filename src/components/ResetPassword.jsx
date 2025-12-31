@@ -1,13 +1,11 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { UserTokenContext } from '../context/UserToken';
 import "../index.css";
 
 export default function ResetPassword() {
-  const { setToken } = useContext(UserTokenContext);
   let navigate = useNavigate();
   let [errMsg, setErrMsg] = useState("");
   let [successMsg, setSuccessMsg] = useState("");
@@ -26,7 +24,6 @@ export default function ResetPassword() {
       if (data.token) {
         setSuccessMsg("Password reset successfully! Redirecting to login...");
         setErrMsg("");
-        setToken(data.token);
         setTimeout(() => {
           navigate("/login");
         }, 1500);

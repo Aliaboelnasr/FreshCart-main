@@ -1,11 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
-import React from "react";
+import { useContext } from "react";
 import { paymentOnline } from "../Apis/payment";
 import { useFormik } from "formik";
 import * as motion from "motion/react-client";
+import { UserTokenContext } from "../context/UserToken";
 
 export default function Payment({ cartId }) {
-  let { mutate, data } = useMutation({ mutationFn: paymentOnline });
+  const { token } = useContext(UserTokenContext);
+  let { mutate, data } = useMutation({ 
+    mutationFn: (shippingData) => paymentOnline({ ...shippingData, token }) 
+  });
 
   function handlePayment(shippingAddress) {
     mutate({ cartId, shippingAddress });

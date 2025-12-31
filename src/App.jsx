@@ -8,6 +8,7 @@ import VerifyCode from "./components/VerifyCode";
 import ResetPassword from "./components/ResetPassword";
 import Cart from "./components/Cart";
 import Payment from "./components/Payment";
+import PaymentDemo from "./components/PaymentDemo";
 import Products from "./components/Products";
 import Brand from "./components/Brand";
 import Categories from "./components/Categories";
@@ -72,6 +73,10 @@ function App() {
               <Payment />
             </ProtectedRoute>
           ),
+        },
+        {
+          path: "payment-demo",
+          element: <PaymentDemo />,
         },
 
         {

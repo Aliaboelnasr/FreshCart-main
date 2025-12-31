@@ -51,7 +51,7 @@ export function updateCount({ productId, count }, token) {
 }
 
 export const removeFromCart = (productId, token) => {
-  return axios.delete(`http://localhost:3000/cart/${productId}`, {
+  return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
     headers: {
       'token': token
     }

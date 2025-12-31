@@ -57,6 +57,10 @@ export const paymentSchema = Yup.object({
 
   phone: Yup.string()
     .required('Phone number is required')
-    .matches(/^[\d\s\-\+\(\)]+$/, 'Please enter a valid phone number')
-    .min(10, 'Phone number must be at least 10 digits'),
+    .matches(/^\+?[\d\s\-\(\)]{10,}$/, 'Please enter a valid phone number')
+    .test('has-digits', 'Phone number must contain at least 10 digits', function(value) {
+      if (!value) return false;
+      const digits = value.replace(/\D/g, '');
+      return digits.length >= 10;
+    }),
 });

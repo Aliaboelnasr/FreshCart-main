@@ -74,8 +74,8 @@ export function validateExpirationDate(expDate) {
     year += 2000;
   }
 
-  // Create date objects for comparison
-  const expiry = new Date(year, month, 1);
+  // Create date objects for comparison (month is 0-based in JS Date)
+  const expiry = new Date(year, month - 1, 1);
   const today = new Date();
   today.setDate(1); // Set to first of month for accurate comparison
 
@@ -104,8 +104,8 @@ export function validateCVV(cvv, cardType = 'unknown') {
  * @returns {boolean} - True if valid, false otherwise
  */
 export function validateCardholderName(name) {
-  // Must contain at least first and last name (2+ characters each)
-  return /^[a-zA-Z\s]{2,}(\s+[a-zA-Z\s]{2,})+$/.test(name.trim());
+  // Must contain at least first and last name, allowing apostrophes, hyphens, and periods
+  return /^[a-zA-Z\-\'\.]+(\s+[a-zA-Z\-\'\.]+)+$/.test(name.trim());
 }
 
 /**
@@ -129,7 +129,9 @@ export function formatCardNumber(cardNumber) {
   
   // American Express: 4-6-5 format
   if (cardType === 'amex') {
-    return cleaned.replace(/(\d{4})(\d{6})(\d{5})/, '$1 $2 $3');
+    if (cleaned.length <= 4) return cleaned;
+    if (cleaned.length <= 10) return cleaned.slice(0, 4) + ' ' + cleaned.slice(4);
+    return cleaned.slice(0, 4) + ' ' + cleaned.slice(4, 10) + ' ' + cleaned.slice(10, 15);
   }
   
   // Other cards: 4-4-4-4 format

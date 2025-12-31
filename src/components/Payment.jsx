@@ -17,7 +17,10 @@ export default function Payment({ cartId }) {
   });
 
   function handlePayment(values) {
-    // Extract only shipping address for API call
+    // NOTE: Credit card information (cardNumber, CVV, cardholderName, zipCode) is validated
+    // client-side only for UX purposes. This sensitive data is NOT sent to the server.
+    // The actual payment processing is handled by the payment gateway URL returned from the API.
+    // Only shipping address information is sent to our backend.
     const shippingAddress = {
       details: values.details,
       city: values.city,

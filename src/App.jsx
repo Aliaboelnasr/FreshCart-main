@@ -1,4 +1,4 @@
-import { Route, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -12,6 +12,7 @@ import CategoryProducts from "./components/CategoryProducts";
 import BrandProducts from "./components/CategoryProducts";
 import ProductDetails from "./components/ProductDetails";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Wishlist from "./components/Wishlist";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UserTokenProvider } from "./context/UserToken";
 import "./index.css";
@@ -54,6 +55,15 @@ function App() {
           element: (
             <ProtectedRoute>
               <Payment />
+            </ProtectedRoute>
+          ),
+        },
+
+        {
+          path: "wishlist",
+          element: (
+            <ProtectedRoute>
+              <Wishlist />
             </ProtectedRoute>
           ),
         },

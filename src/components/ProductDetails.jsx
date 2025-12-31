@@ -1,14 +1,18 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "./Loading";
 import ProductItem from "./ProductItem";
-import useMutationCart, { addToCart } from "../hooks/useMutationCart";
+import useMutationCart, { addToCart } from "../hooks/useMutationcart";
+import useMutationWishlist, {
+  addToWishlist,
+} from "../hooks/useMutationWishlist";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 
 export default function ProductDetails() {
   let { data, mutate, error, isError, isSuccess } = useMutationCart(addToCart);
+  let { mutate: addToWishlistMutation } = useMutationWishlist(addToWishlist);
 
   if (isSuccess) toast.success(data?.data?.message);
   if (isError) toast.error(error?.response?.data?.message);
@@ -95,14 +99,25 @@ export default function ProductDetails() {
               <p>{dataobj?.price} EGP</p>
             </div>
           </div>
-          <button
-            className="btn w-full block py-3 text-white my-3 bg-green-400"
-            onClick={() => {
-              mutate(dataobj?._id);
-            }}
-          >
-            add to cart
-          </button>
+          <div className="flex gap-2">
+            <button
+              className="btn flex-1 block py-3 text-white my-3 bg-green-400"
+              onClick={() => {
+                mutate(dataobj?._id);
+              }}
+            >
+              add to cart
+            </button>
+            <button
+              className="btn px-6 py-3 text-white my-3 bg-red-600 hover:bg-red-700"
+              onClick={() => {
+                addToWishlistMutation(dataobj?._id);
+                toast.success("Added to wishlist!");
+              }}
+            >
+              <i className="fa-solid fa-heart"></i>
+            </button>
+          </div>
         </div>
       </div>
 

@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import logo from "../assets/images/freshcart-logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { UserTokenContext } from "../context/UserToken";
-import { numItem } from "../Context/NumberCartContext";
 import { counterContext } from "../context/Countercontext";
+import { wishlistContext } from "../context/WishlistContext";
 
 export default function Navbar() {
   const { token, setToken } = useContext(UserTokenContext);
   const { cartNum } = useContext(counterContext);
+  const { wishlistCount } = useContext(wishlistContext);
   let ref = useRef(null);
 
   let navigate = useNavigate();
@@ -115,15 +116,26 @@ export default function Navbar() {
               </Link>
             </li>
             {token && (
-              <li>
-                <Link
-                  to="/cart"
-                  className="block py-2 px-3 text-gray-500  rounded lg:bg-transparent lg:p-0 dark:text-white "
-                >
-                  <i className="fa-solid fa-shopping-cart"></i>
-                  {cartNum}
-                </Link>
-              </li>
+              <>
+                <li>
+                  <Link
+                    to="/cart"
+                    className="block py-2 px-3 text-gray-500  rounded lg:bg-transparent lg:p-0 dark:text-white "
+                  >
+                    <i className="fa-solid fa-shopping-cart"></i>
+                    {cartNum}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/wishlist"
+                    className="block py-2 px-3 text-gray-500  rounded lg:bg-transparent lg:p-0 dark:text-white "
+                  >
+                    <i className="fa-solid fa-heart"></i>
+                    {wishlistCount}
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
           <ul className=" font-medium flex flex-col p-4 lg:p-0 mt-4 lg:flex-row lg:space-x-8 rtl:space-x-reverse lg:mt-0 lg:border-0 dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">

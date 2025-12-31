@@ -163,6 +163,58 @@ Context provider for managing wishlist count state across the application.
 
 User authentication is handled via JWT tokens stored in localStorage. Protected routes require authentication to access features like cart and wishlist.
 
+### Forgot Password System
+
+The application includes a comprehensive password recovery system with three stages:
+
+#### Stage 1: Request Reset Code
+1. Navigate to the login page
+2. Click the "Forgot Password?" link below the login button
+3. Enter your registered email address
+4. Click "Send Reset Code"
+5. A verification code will be sent to your email
+
+#### Stage 2: Verify Code
+1. After requesting a reset code, you'll be redirected to the verification page
+2. Enter the 6-digit verification code received in your email
+3. Click "Verify Code"
+4. If the code is valid, you'll proceed to the password reset page
+
+#### Stage 3: Reset Password
+1. Enter your email address
+2. Enter your new password (must start with an uppercase letter and be 3-6 characters)
+3. Confirm your new password
+4. Click "Reset Password"
+5. Upon successful reset, you'll be redirected to the login page
+
+#### API Endpoints
+
+The Forgot Password system uses the following API endpoints:
+
+**Forgot Password (Request Code)**
+```
+POST https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords
+Body: { email: "user@example.com" }
+```
+
+**Verify Reset Code**
+```
+POST https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode
+Body: { resetCode: "123456" }
+```
+
+**Reset Password**
+```
+PUT https://ecommerce.routemisr.com/api/v1/auth/resetPassword
+Body: { email: "user@example.com", newPassword: "NewPass123" }
+```
+
+#### Components
+
+- **ForgotPassword.jsx**: Email submission form for password reset
+- **VerifyCode.jsx**: Verification code input form
+- **ResetPassword.jsx**: New password submission form
+
 ## Available Scripts
 
 - `npm run dev` - Start development server

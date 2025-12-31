@@ -12,6 +12,7 @@ import CategoryProducts from "./components/CategoryProducts";
 import BrandProducts from "./components/CategoryProducts";
 import ProductDetails from "./components/ProductDetails";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Wishlist from "./components/Wishlist";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UserTokenProvider } from "./context/UserToken";
 import "./index.css";
@@ -54,6 +55,15 @@ function App() {
           element: (
             <ProtectedRoute>
               <Payment />
+            </ProtectedRoute>
+          ),
+        },
+
+        {
+          path: "wishlist",
+          element: (
+            <ProtectedRoute>
+              <Wishlist />
             </ProtectedRoute>
           ),
         },

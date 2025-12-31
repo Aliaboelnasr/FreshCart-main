@@ -11,6 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { numItem } from "./context/NumberCartContext";
 import CounterContextProvider from "./context/Countercontext";
+import WishlistContextProvider from "./context/WishlistContext";
 
 const queryClient = new QueryClient();
 
@@ -19,9 +20,11 @@ createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <UserTokenContext.Provider>
         <CounterContextProvider>
-          <Toaster></Toaster>
-          <App />
-          <ReactQueryDevtools initialIsOpen={false} />
+          <WishlistContextProvider>
+            <Toaster></Toaster>
+            <App />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </WishlistContextProvider>
         </CounterContextProvider>
       </UserTokenContext.Provider>
     </QueryClientProvider>

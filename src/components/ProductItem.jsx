@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useMutationCart, { addToCart } from "../hooks/useMutationCart";
+import useMutationWishlist, {
+  addToWishlist,
+} from "../hooks/useMutationWishlist";
 import toast from "react-hot-toast";
 
 export default function ProductItem({ prod }) {
@@ -15,6 +18,7 @@ export default function ProductItem({ prod }) {
   } = prod;
 
   let { data, mutate, error, isError, isSuccess } = useMutationCart(addToCart);
+  let { mutate: addToWishlistMutation } = useMutationWishlist(addToWishlist);
 
   if (isSuccess) toast.success(data?.data?.message);
   if (isError) toast.error(error?.response?.data?.message);
@@ -40,14 +44,25 @@ export default function ProductItem({ prod }) {
           </div>
         </div>
       </Link>
-      <button
-        onClick={() => {
-          mutate(id);
-        }}
-        className="btn bg-green-400 text-white px-5 py-3 rounded"
-      >
-        add to Cart
-      </button>
+      <div className="flex gap-2">
+        <button
+          onClick={() => {
+            mutate(id);
+          }}
+          className="btn bg-green-400 text-white px-5 py-3 rounded flex-1"
+        >
+          add to Cart
+        </button>
+        <button
+          onClick={() => {
+            addToWishlistMutation(id);
+            toast.success("Added to wishlist!");
+          }}
+          className="btn bg-red-600 text-white px-4 py-3 rounded hover:bg-red-700"
+        >
+          <i className="fa-solid fa-heart"></i>
+        </button>
+      </div>
     </div>
   );
 }

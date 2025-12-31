@@ -1,11 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
-
-let token = localStorage.getItem("token");
+import { useContext } from "react";
+import { UserTokenContext } from "../context/UserToken";
 
 //add to cart
-export function addToCart(productId) {
+export function addToCart(productId, token) {
   return axios.post(
     `https://ecommerce.routemisr.com/api/v1/cart`,
     { productId },
@@ -18,7 +17,7 @@ export function addToCart(productId) {
 }
 
 //delete item from cart
-export function deleteItem(productId) {
+export function deleteItem(productId, token) {
   return axios.delete(
     `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
     {
@@ -30,26 +29,16 @@ export function deleteItem(productId) {
 }
 
 //clear item from cart
-export const clearCart = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: async () => {
-      const response = await axios.delete('https://ecommerce.routemisr.com/api/v1/cart', {
-        headers: {
-          'token': localStorage.getItem('token')
-        }
-      });
-      return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries('cart');
+export const clearCart = (token) => {
+  return axios.delete('https://ecommerce.routemisr.com/api/v1/cart', {
+    headers: {
+      'token': token
     }
   });
 };
 
 //update
-export function updateCount({ productId, count }) {
+export function updateCount({ productId, count }, token) {
   return axios.put(
     `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
     { count },
@@ -61,29 +50,20 @@ export function updateCount({ productId, count }) {
   );
 }
 
-export const removeFromCart = (productId) => {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: async () => {
-      const response = await axios.delete(`http://localhost:3000/cart/${productId}`, {
-        headers: {
-          'token': localStorage.getItem('token')
-        }
-      });
-      return response.data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries('cart');
+export const removeFromCart = (productId, token) => {
+  return axios.delete(`http://localhost:3000/cart/${productId}`, {
+    headers: {
+      'token': token
     }
   });
 };
 
 export default function useMutationCart(fn) {
   const queryClient = useQueryClient();
+  const { token } = useContext(UserTokenContext);
 
   return useMutation({
-    mutationFn: fn,
+    mutationFn: (data) => fn(data, token),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },

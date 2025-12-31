@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useContext } from "react";
+import { UserTokenContext } from "../context/UserToken";
 
 // Add to wishlist
-export function addToWishlist(productId) {
-  const token = localStorage.getItem("token");
+export function addToWishlist(productId, token) {
   return axios.post(
     `https://ecommerce.routemisr.com/api/v1/wishlist`,
     { productId },
@@ -16,8 +17,7 @@ export function addToWishlist(productId) {
 }
 
 // Remove from wishlist
-export function removeFromWishlist(productId) {
-  const token = localStorage.getItem("token");
+export function removeFromWishlist(productId, token) {
   return axios.delete(
     `https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,
     {
@@ -30,9 +30,10 @@ export function removeFromWishlist(productId) {
 
 export default function useMutationWishlist(fn) {
   const queryClient = useQueryClient();
+  const { token } = useContext(UserTokenContext);
 
   return useMutation({
-    mutationFn: fn,
+    mutationFn: (data) => fn(data, token),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["wishlist"] });
     },

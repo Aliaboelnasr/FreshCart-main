@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { UserTokenContext } from "../context/UserToken";
 
 export default function Register() {
-  const { token, setToken } = useContext(UserTokenContext);
+  const { setToken } = useContext(UserTokenContext);
   let navigate = useNavigate();
   let [errMsg, setErrMsg] = useState("");
   let [loading, setLoading] = useState(false);
@@ -19,7 +19,6 @@ export default function Register() {
         values
       );
       if (data.message === "success") {
-        localStorage.setItem("token", data.token);
         setToken(data.token);
         navigate("/cart");
       }

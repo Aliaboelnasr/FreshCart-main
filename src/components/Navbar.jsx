@@ -13,7 +13,6 @@ export default function Navbar() {
 
   let navigate = useNavigate();
   function logout() {
-    localStorage.removeItem("token");
     setToken(null);
     navigate("/");
   }

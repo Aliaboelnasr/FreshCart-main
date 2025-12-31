@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-let token = localStorage.getItem("token");
-
 export function getCarts() {
+  const token = localStorage.getItem("token");
   return axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, {
     headers: {
       token,

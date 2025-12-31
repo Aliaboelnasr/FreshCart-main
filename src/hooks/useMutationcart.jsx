@@ -2,10 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 
-let token = localStorage.getItem("token");
-
 //add to cart
 export function addToCart(productId) {
+  const token = localStorage.getItem("token");
   return axios.post(
     `https://ecommerce.routemisr.com/api/v1/cart`,
     { productId },
@@ -19,6 +18,7 @@ export function addToCart(productId) {
 
 //delete item from cart
 export function deleteItem(productId) {
+  const token = localStorage.getItem("token");
   return axios.delete(
     `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
     {
@@ -35,9 +35,10 @@ export const clearCart = () => {
   
   return useMutation({
     mutationFn: async () => {
+      const token = localStorage.getItem('token');
       const response = await axios.delete('https://ecommerce.routemisr.com/api/v1/cart', {
         headers: {
-          'token': localStorage.getItem('token')
+          token
         }
       });
       return response.data;
@@ -50,6 +51,7 @@ export const clearCart = () => {
 
 //update
 export function updateCount({ productId, count }) {
+  const token = localStorage.getItem("token");
   return axios.put(
     `https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
     { count },
@@ -66,9 +68,10 @@ export const removeFromCart = (productId) => {
   
   return useMutation({
     mutationFn: async () => {
+      const token = localStorage.getItem('token');
       const response = await axios.delete(`http://localhost:3000/cart/${productId}`, {
         headers: {
-          'token': localStorage.getItem('token')
+          token
         }
       });
       return response.data;

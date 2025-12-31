@@ -21,7 +21,6 @@ export default function Login() {
       );
       if (data.message === "success") {
         setToken(data.token);
-        localStorage.setItem("token", data.token);
         navigate("/cart");
       }
       setLoading(false);

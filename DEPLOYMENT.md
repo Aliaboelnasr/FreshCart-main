@@ -170,6 +170,6 @@ After deploying to any platform:
 ## Support
 
 For issues or questions:
-- Check the [GitHub Issues](https://github.com/Aliaboelnasr/FreshCart-main/issues)
+- Check the GitHub Issues page for your repository
 - Review the deployment platform's documentation
 - Verify environment variables are set correctly

@@ -3,6 +3,9 @@ import Layout from "./components/Layout";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import ForgotPassword from "./components/ForgotPassword";
+import VerifyCode from "./components/VerifyCode";
+import ResetPassword from "./components/ResetPassword";
 import Cart from "./components/Cart";
 import Payment from "./components/Payment";
 import Products from "./components/Products";
@@ -36,6 +39,18 @@ function App() {
         {
           path: "register",
           element: <Register />,
+        },
+        {
+          path: "forgot-password",
+          element: <ForgotPassword />,
+        },
+        {
+          path: "verify-code",
+          element: <VerifyCode />,
+        },
+        {
+          path: "reset-password",
+          element: <ResetPassword />,
         },
         { path: "/products", element: <Products></Products> },
         {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import { UserTokenContext } from '../context/UserToken';
 import "../index.css";
@@ -134,6 +134,15 @@ export default function Login() {
             "login"
           )}
         </button>
+        
+        <div className="mt-4">
+          <Link 
+            to="/forgot-password" 
+            className="text-sm text-green-600 hover:text-green-800 dark:text-green-500 dark:hover:text-green-400"
+          >
+            Forgot Password?
+          </Link>
+        </div>
       </form>
     </div>
   );

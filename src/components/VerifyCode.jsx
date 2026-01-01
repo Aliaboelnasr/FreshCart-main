@@ -55,6 +55,7 @@ export default function VerifyCode() {
       if (data.statusMsg === "success") {
         setResendMsg("New verification code sent to your email!");
         formik.setFieldValue('resetCode', '');
+        setErrMsg('');
       }
       setResendLoading(false);
     } catch (error) {

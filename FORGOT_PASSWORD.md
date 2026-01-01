@@ -193,14 +193,20 @@ const [loading, setLoading] = useState(false);   // Loading state
 - Password must contain lowercase letters and numbers
 - Password confirmation must match
 
-**useEffect Hook**:
+**Email Pre-filling**:
+
+The email is pre-filled using Formik's initialValues, which reads from localStorage at initialization:
+
 ```javascript
-useEffect(() => {
-  const savedEmail = localStorage.getItem('resetEmail');
-  if (savedEmail) {
-    formik.setFieldValue('email', savedEmail);
-  }
-}, []);
+let formik = useFormik({
+  initialValues: {
+    email: localStorage.getItem('resetEmail') || "",
+    newPassword: "",
+    confirmPassword: "",
+  },
+  validationSchema,
+  onSubmit: handleResetPassword,
+});
 ```
 
 **Navigation**:

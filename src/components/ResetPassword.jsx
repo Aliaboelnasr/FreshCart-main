@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import "../index.css";
 
@@ -22,6 +22,8 @@ export default function ResetPassword() {
         }
       );
       if (data.token) {
+        // Clear saved email after successful reset
+        localStorage.removeItem('resetEmail');
         setSuccessMsg("Password reset successfully! Redirecting to login...");
         setErrMsg("");
         setTimeout(() => {
@@ -48,7 +50,7 @@ export default function ResetPassword() {
 
   let formik = useFormik({
     initialValues: {
-      email: "",
+      email: localStorage.getItem('resetEmail') || "",
       newPassword: "",
       confirmPassword: "",
     },
@@ -186,6 +188,15 @@ export default function ResetPassword() {
             "Reset Password"
           )}
         </button>
+
+        <div className="mt-4">
+          <Link 
+            to="/verify-code" 
+            className="text-sm text-green-600 hover:text-green-800 dark:text-green-500 dark:hover:text-green-400"
+          >
+            ← Back to Verify Code
+          </Link>
+        </div>
       </form>
     </div>
   );

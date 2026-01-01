@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import "../index.css";
 
@@ -19,6 +19,8 @@ export default function ForgotPassword() {
         values
       );
       if (data.statusMsg === "success") {
+        // Store email for later use in reset process
+        localStorage.setItem('resetEmail', values.email);
         setSuccessMsg(data.message);
         setErrMsg("");
         setTimeout(() => {
@@ -49,7 +51,7 @@ export default function ForgotPassword() {
     <div className="container">
       <h2 className="text-[1.5rem] font-bold my-3">Forgot Password</h2>
       <p className="text-gray-600 mb-5">
-        Enter your registered email address and we'll send you a verification code to reset your password.
+        Enter your registered email address and we&apos;ll send you a verification code to reset your password.
       </p>
 
       <form className="max-w-md mx-auto" onSubmit={formik.handleSubmit}>
@@ -115,6 +117,15 @@ export default function ForgotPassword() {
             "Send Reset Code"
           )}
         </button>
+        
+        <div className="mt-4">
+          <Link 
+            to="/login" 
+            className="text-sm text-green-600 hover:text-green-800 dark:text-green-500 dark:hover:text-green-400"
+          >
+            ← Back to Login
+          </Link>
+        </div>
       </form>
     </div>
   );

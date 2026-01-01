@@ -36,6 +36,20 @@ export default function VerifyCode() {
     }
   }
 
+  let validationSchema = Yup.object().shape({
+    resetCode: Yup.string()
+      .required("Verification code is required")
+      .matches(/^[0-9]{6}$/, "Code must be 6 digits"),
+  });
+
+  let formik = useFormik({
+    initialValues: {
+      resetCode: "",
+    },
+    validationSchema,
+    onSubmit: handleVerifyCode,
+  });
+
   async function handleResendCode() {
     // Get email from localStorage if available
     const email = localStorage.getItem('resetEmail');
@@ -55,7 +69,6 @@ export default function VerifyCode() {
       if (data.statusMsg === "success") {
         setResendMsg("New verification code sent to your email!");
         formik.setFieldValue('resetCode', '');
-        setErrMsg('');
       }
       setResendLoading(false);
     } catch (error) {
@@ -63,20 +76,6 @@ export default function VerifyCode() {
       setResendLoading(false);
     }
   }
-
-  let validationSchema = Yup.object().shape({
-    resetCode: Yup.string()
-      .required("Verification code is required")
-      .matches(/^[0-9]{6}$/, "Code must be 6 digits"),
-  });
-
-  let formik = useFormik({
-    initialValues: {
-      resetCode: "",
-    },
-    validationSchema,
-    onSubmit: handleVerifyCode,
-  });
 
   return (
     <div className="container">

@@ -184,7 +184,9 @@ User authentication is handled via JWT tokens stored in localStorage. Protected 
 
 ### Forgot Password System
 
-The application includes a comprehensive password recovery system with three stages:
+The application includes a comprehensive password recovery system with three stages. For detailed developer documentation, see [FORGOT_PASSWORD.md](./FORGOT_PASSWORD.md).
+
+#### Quick Start Guide
 
 #### Stage 1: Request Reset Code
 1. Navigate to the login page
@@ -200,11 +202,20 @@ The application includes a comprehensive password recovery system with three sta
 4. If the code is valid, you'll proceed to the password reset page
 
 #### Stage 3: Reset Password
-1. Enter your email address
+1. Enter your email address (pre-filled from previous step)
 2. Enter your new password (must start with an uppercase letter and be 3-6 characters)
 3. Confirm your new password
 4. Click "Reset Password"
 5. Upon successful reset, you'll be redirected to the login page
+
+#### Key Features
+
+- **Email Persistence**: Your email is saved across stages for convenience
+- **Resend Code**: If your code expires, you can request a new one
+- **Navigation Fallbacks**: Back links allow you to navigate between stages
+- **Retry Logic**: Unlimited attempts to enter verification code
+- **Error Handling**: Clear, actionable error messages at each step
+- **Auto-redirect**: Smooth transitions between stages on success
 
 #### API Endpoints
 

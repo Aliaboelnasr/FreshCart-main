@@ -7,6 +7,7 @@ A modern e-commerce web application built with React, Vite, and TailwindCSS.
 - **Product Browsing**: Browse products by categories and brands
 - **Shopping Cart**: Add products to cart, update quantities, and checkout
 - **Wishlist System**: Save favorite products for later purchase
+- **Order History**: View all your past orders with detailed information
 - **User Authentication**: Secure login and registration
 - **Responsive Design**: Mobile-friendly interface using TailwindCSS
 - **Real-time Updates**: React Query for efficient data fetching and caching
@@ -85,9 +86,12 @@ When deploying to production (Vercel, Netlify, GitHub Pages, etc.):
 FreshCart-main/
 ├── src/
 │   ├── Apis/              # API configuration
+│   │   ├── payment.js
+│   │   └── orders.js      # Orders API functions
 │   ├── components/        # React components
 │   │   ├── Cart.jsx
 │   │   ├── Wishlist.jsx
+│   │   ├── AllOrders.jsx  # Orders history component
 │   │   ├── ProductItem.jsx
 │   │   ├── ProductDetails.jsx
 │   │   └── ...
@@ -99,7 +103,8 @@ FreshCart-main/
 │   │   ├── useMutationcart.jsx
 │   │   ├── useMutationWishlist.jsx
 │   │   ├── useQueryCart.jsx
-│   │   └── useQueryWishlist.jsx
+│   │   ├── useQueryWishlist.jsx
+│   │   └── useQueryOrders.jsx  # Orders query hook
 │   ├── assets/            # Static assets
 │   └── App.jsx            # Main app component
 ├── public/                # Public static files
@@ -119,6 +124,82 @@ The Wishlist System allows authenticated users to save products for later viewin
 3. **Remove from Wishlist**: Remove products from wishlist
 4. **Add to Cart**: Quick add to cart from wishlist page
 5. **Wishlist Counter**: Display wishlist item count in navigation bar
+
+## All Orders System
+
+### Overview
+
+The All Orders component displays a comprehensive history of all orders placed by the authenticated user. This feature provides users with easy access to their purchase history and order tracking.
+
+### Features
+
+1. **Order List**: View all orders with key information displayed in card format
+2. **Order Details**: Each order card shows:
+   - Order ID and creation date
+   - Payment status (Paid/Pending Payment)
+   - Delivery status (Delivered/In Transit)
+   - Payment method type
+   - Total number of items
+   - Total order amount
+   - Shipping address details
+3. **Pagination**: Orders are paginated (5 orders per page) for better performance and user experience
+4. **Loading State**: Displays loading spinner while fetching orders
+5. **Error Handling**: Shows user-friendly error messages if the API request fails
+6. **Empty State**: Provides helpful messaging and navigation options when no orders exist
+7. **Responsive Design**: Fully responsive layout that works on all device sizes
+
+### API Endpoint
+
+The component uses the following API endpoint:
+
+```
+GET https://ecommerce.routemisr.com/api/v1/orders/user/{userId}
+Headers: { token: "user-token" }
+```
+
+### Usage
+
+#### Accessing Your Orders
+
+1. Complete a purchase through the payment flow
+2. After successful payment, you'll be redirected to the All Orders page
+3. Alternatively, navigate to `/allorders` if you're logged in
+4. View your complete order history with all details
+
+### Components
+
+#### AllOrders.jsx
+Main orders page component that:
+- Fetches and displays all user orders
+- Handles loading, error, and empty states
+- Implements pagination for large order lists
+- Shows detailed order information in an organized card layout
+
+#### useQueryOrders.jsx
+Custom React Query hook that:
+- Decodes JWT token to extract user ID
+- Fetches orders from the API
+- Manages caching and refetching strategies
+- Returns loading, error, and data states
+
+#### orders.js (API)
+API module that provides the `getUserOrders` function to fetch orders from the backend.
+
+### Implementation Details
+
+- **Authentication**: Uses JWT token from UserTokenContext
+- **User ID Extraction**: Decodes JWT token using jwt-decode library to get user ID
+- **Data Fetching**: Uses TanStack Query (React Query) for efficient data fetching and caching
+- **Pagination**: Client-side pagination with configurable items per page
+- **Date Formatting**: Displays dates in user-friendly format (e.g., "January 1, 2026, 10:30 PM")
+
+### Technical Stack
+
+- **React Query**: For data fetching and caching
+- **jwt-decode**: For extracting user ID from JWT token
+- **Axios**: For HTTP requests
+- **Framer Motion**: For smooth animations
+- **TailwindCSS**: For responsive styling
 
 ### API Endpoints
 
